@@ -1,0 +1,214 @@
+using System;
+
+namespace Lab2
+{
+    public class Blue
+    {
+        const double E = 0.0001;
+        
+        // Task 1: Calculate sum of trigonometric series
+        public double Task1(int n, double x)
+        {
+            double answer = 0;
+
+            // code here
+            for (int i = 1; i <= n; i++)
+            {
+                answer += Math.Sin(i * x) / Math.Pow(x, i - 1);
+            }
+            // end
+
+            return answer;
+        }
+
+        // Task 2: Calculate sum of exponential series with alternating signs
+        public double Task2(int n)
+        {
+            double answer = 0;
+
+            // code here
+            double s = 1.0; // Assuming s = 1 since not specified in parameters
+            for (int i = 1; i <= n; i++)
+            {
+                double term = Math.Pow(s, i) / Factorial(i);
+                if (i % 2 == 1) // Odd terms are negative
+                    answer -= term;
+                else // Even terms are positive
+                    answer += term;
+            }
+            // end
+
+            return answer;
+        }
+
+        // Task 3: Sum of first n Fibonacci numbers (starting from 0)
+        public long Task3(int n)
+        {
+            long answer = 0;
+
+            // code here
+            if (n >= 1) answer += 0; // F0 = 0
+            if (n >= 2) answer += 1; // F1 = 1
+            
+            long prev1 = 0, prev2 = 1;
+            for (int i = 2; i < n; i++)
+            {
+                long current = prev1 + prev2;
+                answer += current;
+                prev1 = prev2;
+                prev2 = current;
+            }
+            // end
+
+            return answer;
+        }
+
+        // Task 4: Maximum number of arithmetic progression terms where sum doesn't exceed L
+        public int Task4(int a, int h, int L)
+        {
+            int answer = 0;
+
+            // code here
+            int sum = 0;
+            int n = 0;
+            
+            while (sum <= L)
+            {
+                int term = a + n * h;
+                sum += term;
+                if (sum <= L)
+                    n++;
+                else
+                    break;
+            }
+            answer = n;
+            // end
+
+            return answer;
+        }
+
+        // Task 5: Calculate series sum until term absolute value is less than E
+        public double Task5(double x)
+        {
+            double answer = 0;
+
+            // code here
+            int k = 0;
+            double term;
+            
+            do
+            {
+                term = Math.Pow(-1, k) * Math.Pow(x, 2 * k + 1) / (2 * k + 1);
+                answer += term;
+                k++;
+            } while (Math.Abs(term) >= E);
+            // end
+
+            return answer;
+        }
+
+        // Task 6: Time for amoeba population to reach at least L cells
+        public int Task6(int h, int S, int L)
+        {
+            int answer = 0;
+
+            // code here
+            int currentCells = S;
+            
+            while (currentCells < L)
+            {
+                answer += h;
+                currentCells *= 2;
+            }
+            // end
+
+            return answer;
+        }
+
+        // Task 7: Athlete training statistics
+        public (double a, int b, int c) Task7(double S, double L)
+        {
+            double a = 0;
+            int b = 0;
+            int c = 0;
+
+            // code here
+            double dailyDistance = S;
+            double totalDistance = 0;
+            int days = 0;
+            
+            // Part a: Total distance in 7 days
+            for (int i = 0; i < 7; i++)
+            {
+                totalDistance += dailyDistance;
+                dailyDistance *= 1.01; // Increase by 1%
+            }
+            a = totalDistance;
+            
+            // Part b: Days to reach 100 km total
+            dailyDistance = S;
+            totalDistance = 0;
+            days = 0;
+            while (totalDistance < 100)
+            {
+                totalDistance += dailyDistance;
+                dailyDistance *= 1.01;
+                days++;
+            }
+            b = days;
+            
+            // Part c: Days to run more than 42 km in one day
+            dailyDistance = S;
+            days = 0;
+            while (dailyDistance <= 42)
+            {
+                dailyDistance *= 1.01;
+                days++;
+            }
+            c = days;
+            // end
+
+            return (a, b, c);
+        }
+
+        // Task 8: Sum of series and function values in range [a, b] with step h
+        public (double SS, double SY) Task8(double a, double b, double h)
+        {
+            double SS = 0;
+            double SY = 0;
+
+            // code here
+            for (double x = a; x <= b; x += h)
+            {
+                // Calculate series sum
+                double seriesSum = 0;
+                int i = 0;
+                double term;
+                
+                do
+                {
+                    term = (2 * i + 1) * Math.Pow(x, 2 * i) / Factorial(i);
+                    seriesSum += term;
+                    i++;
+                } while (Math.Abs(term) >= E);
+                
+                SS += seriesSum;
+                
+                // Calculate function value
+                SY += (1 + 2 * x * x) * Math.Exp(x);
+            }
+            // end
+
+            return (SS, SY);
+        }
+
+        // Helper method to calculate factorial
+        private double Factorial(int n)
+        {
+            double result = 1;
+            for (int i = 2; i <= n; i++)
+                result *= i;
+            return result;
+        }
+    }
+}
