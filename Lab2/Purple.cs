@@ -96,25 +96,38 @@ namespace Lab2
             return answer;
         }
 
-        // Task 7: حساب عدد الأيام للوصول إلى هدف معين في تدريب رياضي
-        public int Task7(double S, double d)
-        {
-            int answer = 0;
+  // Task 7: حساب عدد الأيام للوصول إلى هدف معين في تدريب رياضي
+public int Task7(double S, double d)
+{
+    int answer = 0;
 
-            // code here
-            double daily = S;
-            double total = 0;
+    // code here
+    double daily = S;
+    double total = 0;
+    
+    // إذا كان الهدف أصغر من المسافة اليومية الأولى
+    if (d <= S)
+        return 1;
+    
+    while (total < d)
+    {
+        answer++;
+        total += daily;
+        
+        // إذا وصلنا أو تجاوزنا الهدف، نخرج
+        if (total >= d)
+            break;
             
-            while (total < d)
-            {
-                total += daily;
-                daily *= 1.01; // زيادة 1% كل يوم
-                answer++;
-            }
-            // end
+        daily *= 1.01; // زيادة 1%
+        
+        // حماية إضافية من الحلقات اللانهائية
+        if (answer > 10000)
+            break;
+    }
+    // end
 
-            return answer;
-        }
+    return answer;
+}
 
         // Task 8: مجموع متسلسلة ودالة في نطاق معين
         public (double SS, double SY) Task8(double a, double b, double h)
@@ -161,3 +174,4 @@ namespace Lab2
         }
     }
 }
+
