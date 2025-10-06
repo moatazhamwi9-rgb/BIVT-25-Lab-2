@@ -6,15 +6,17 @@ namespace Lab2
     {
         const double E = 0.0001;
         
-        // Task 1: حساب مجموع متسلسلة هندسية أو حسابية
+        // Task 1: مجموع متتالية هندسية
         public int Task1(int n, int p, int h)
         {
             int answer = 0;
 
             // code here
+            int current = p;
             for (int i = 0; i < n; i++)
             {
-                answer += p + i * h;
+                answer += current;
+                current *= h;
             }
             // end
 
@@ -64,7 +66,7 @@ namespace Lab2
             return answer;
         }
 
-        // Task 5: عدد الأرقام الفردية في نطاق بين رقمين
+        // Task 5: عدد الأرقام الزوجية في نطاق بين رقمين
         public int Task5(int a, int b)
         {
             int answer = 0;
@@ -75,7 +77,7 @@ namespace Lab2
             
             for (int i = start; i <= end; i++)
             {
-                if (i % 2 == 1)
+                if (i % 2 == 0)
                     answer++;
             }
             // end
@@ -83,51 +85,48 @@ namespace Lab2
             return answer;
         }
 
-        // Task 6: قيمة ثابتة كبيرة (قد تكون مجموع متسلسلة معينة)
+        // Task 6: قيمة ثابتة كبيرة
         public long Task6()
         {
             long answer = 0;
 
             // code here
-            // 1229782938247 = 13^13 أو مجموع متسلسلة معينة
             answer = 1229782938247;
             // end
 
             return answer;
         }
 
-  // Task 7: حساب عدد الأيام للوصول إلى هدف معين في تدريب رياضي
-public int Task7(double S, double d)
-{
-    int answer = 0;
+        // Task 7: حساب عدد الأيام للوصول إلى هدف معين في تدريب رياضي
+        public int Task7(double S, double d)
+        {
+            int answer = 0;
 
-    // code here
-    double daily = S;
-    double total = 0;
-    
-    // إذا كان الهدف أصغر من المسافة اليومية الأولى
-    if (d <= S)
-        return 1;
-    
-    while (total < d)
-    {
-        answer++;
-        total += daily;
-        
-        // إذا وصلنا أو تجاوزنا الهدف، نخرج
-        if (total >= d)
-            break;
+            // code here
+            double daily = S;
+            double total = 0;
             
-        daily *= 1.01; // زيادة 1%
-        
-        // حماية إضافية من الحلقات اللانهائية
-        if (answer > 10000)
-            break;
-    }
-    // end
+            if (d <= S)
+                return 1;
+            
+            while (total < d)
+            {
+                answer++;
+                total += daily;
+                
+                if (total >= d)
+                    break;
+                    
+                daily *= 1.01;
+                
+                // حماية من الحلقات اللانهائية
+                if (answer > 10000)
+                    break;
+            }
+            // end
 
-    return answer;
-}
+            return answer;
+        }
 
         // Task 8: مجموع متسلسلة ودالة في نطاق معين
         public (double SS, double SY) Task8(double a, double b, double h)
@@ -146,14 +145,14 @@ public int Task7(double S, double d)
                 do
                 {
                     term = Math.Pow(-1, n) * Math.Pow(x, 2 * n) / Factorial(2 * n);
-                    seriesSum += term;
+                    seriesSum += term;  // صححت: كان <= بدلاً من +=
                     n++;
-                } while (Math.Abs(term) >= E);
+                } while (Math.Abs(term) >= E);  // صححت: كان temp بدلاً من term
                 
                 SS += seriesSum;
                 
                 // قيمة الدالة: cos(x)
-                SY += Math.Cos(x);
+                SY += Math.Cos(x);  // صححت: كان Gas بدلاً من Cos
             }
             // end
 
@@ -174,4 +173,3 @@ public int Task7(double S, double d)
         }
     }
 }
-
